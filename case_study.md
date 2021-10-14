@@ -3,6 +3,7 @@ case study
 
 ``` r
 library(tidyverse)
+library(leaflet)
 library(p8105.datasets)
 
 knitr::opts_chunk$set(
@@ -85,4 +86,15 @@ nyc_airbnb %>%
 
 <img src="case_study_files/figure-gfm/unnamed-chunk-4-1.png" width="90%" />
 
-## retry
+## retry leaflet
+
+``` r
+pal = colorNumeric("viridis", NULL)
+
+nyc_airbnb %>% 
+  filter(price <= 500) %>% 
+  sample_n(1000) %>% 
+  leaflet() %>% 
+  addProviderTiles(providers$Stamen.Toner) %>% 
+  addCircleMarkers(~lat, ~long, radius = 1, color = ~pal(price))
+```

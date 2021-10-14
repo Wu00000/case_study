@@ -5,6 +5,7 @@ output: github_document
 
 ```{r, message = FALSE}
 library(tidyverse)
+library(leaflet)
 library(p8105.datasets)
 
 knitr::opts_chunk$set(
@@ -67,4 +68,16 @@ nyc_airbnb %>%
 ```
 
 
-## retry
+## retry leaflet
+
+```{r, eval = FALSE}
+pal = colorNumeric("viridis", NULL)
+
+nyc_airbnb %>% 
+  filter(price <= 500) %>% 
+  sample_n(1000) %>% 
+  leaflet() %>% 
+  addProviderTiles(providers$Stamen.Toner) %>% 
+  addCircleMarkers(~lat, ~long, radius = 1, color = ~pal(price))
+```
+
